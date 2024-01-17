@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Post</title>
+</head>
+
+<body>
+    <h2>Edit Post</h2>
+    <input type="text" id="edit-post-title" placeholder="Post Title">
+    <textarea id="edit-post-content" placeholder="Post Content"></textarea>
+    <button onclick="submitEdit()">Save Changes</button>
+    <script>
+        const postId = localStorage.getItem('editPostId');
+        if (!postId) {
+            alert('No post selected for editing');
+            window.location.href = 'view-posts.html';
+        }
+        // Fetch and display the post details to be edited
+    </script>
+    <script src="edit-post.js"></script>
+</body>
+
+</html>

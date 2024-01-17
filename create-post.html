@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Post</title>
+    <script>
+        // Redirect to login if no JWT token is found
+        if (!localStorage.getItem('jwtToken')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+</head>
+<body>
+    <h2>Create Post</h2>
+    <input type="text" id="post-title" placeholder="Post Title">
+    <textarea id="post-content" placeholder="Post Content"></textarea>
+    <button onclick="createPost()">Create Post</button>
+    <script src="post.js"></script>
+</body>
+
+</html>

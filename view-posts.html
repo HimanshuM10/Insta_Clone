@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <title>View Posts</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #user-profile,
+      #container,
+      #posts-container {
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        width: 100%;
+        max-width: 800px;
+        margin-bottom: 20px;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      h2 {
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      p {
+        color: #555;
+        margin-bottom: 15px;
+      }
+
+      /* Add these styles to your existing CSS */
+
+      .button-section {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #fff;
+        transition: background-color 0.3s ease;
+      }
+
+      .follow-btn,
+      .share-btn {
+        background-color: #2196f3;
+      }
+
+      .follow-btn:hover,
+      .share-btn:hover {
+        background-color: #0b7dda;
+      }
+
+      .delete-btn,
+      .create-post-btn {
+        background-color: #4caf50;
+      }
+
+      .like-btn[data-liked="true"] {
+        background-color: #45a049;
+      }
+
+      .delete-btn:hover,
+      .create-post-btn {
+        background-color: #45a049;
+      }
+
+      .comment-btn,
+      .edit-btn,
+      .delete-btn {
+        margin-left: 10px;
+      }
+
+      .comment-section {
+        margin-top: 15px;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .edit-btn,
+      .delete-btn {
+        background-color: #3d3b40;
+      }
+      .like-count {
+        margin-left: 10px;
+        color: #555;
+      }
+      .comment-btn {
+        background-color: red;
+      }
+
+      #container {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      span#username {
+        font-weight: bold;
+      }
+      .logout-btn {
+        background-color: red;
+      }
+      .like-btn {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: 0;
+      }
+
+      .like-btn i {
+        font-size: 24px;
+        color: #e74c3c; /* Default color */
+        transition: color 0.3s ease;
+      }
+
+      .like-btn.liked i {
+        color: #c0392b; /* Liked color */
+      }
+
+      .like-btn:hover i {
+        color: #c0392b; /* Hover color */
+      }
+    </style>
+    <script>
+      if (!localStorage.getItem("jwtToken")) {
+        window.location.href = "login.html";
+      }
+
+      function fetchUser() {
+        fetch("http://localhost:3000/users", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                `Failed to fetch user. Status: ${response.status}`
+              );
+            }
+            return response.json();
+          })
+          .then((userData) => {
+            document.getElementById("username").innerText = userData.username;
+          })
+          .catch((error) => {
+            console.error("Error fetching user:", error);
+          });
+      }
+
+      fetchUser();
+    </script>
+  </head>
+
+  <body>
+    <div id="user-profile">
+      <h2>User Profile</h2>
+      <p>Username: <span id="username"></span></p>
+      <button
+        class="create-post-btn"
+        onclick="window.location.href='create-post.html'"
+      >
+        Create Post
+      </button>
+    </div>
+
+    <div id="posts-container">
+      <!-- Posts will be displayed here -->
+    </div>
+
+    <button class="logout-btn" onclick="logoutUser()">Logout</button>
+
+    <script src="view-posts.js"></script>
+    <script src="logout.js"></script>
+  </body>
+</html>
